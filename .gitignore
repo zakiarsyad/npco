@@ -1,0 +1,29 @@
+# dependencies
+node_modules/
+
+# build output
+dist/
+.output/
+.astro/
+
+# netlify
+.netlify/
+
+# env
+.env
+.env.*
+!.env.example
+
+# os / editor
+.DS_Store
+.vscode/*
+!.vscode/extensions.json
+.idea/
+
+# research artifacts (regenerate via npm run audit / shots / images)
+docs/shots/
+docs/*.json
+src/assets/candidates/
+
+# raw downloaded source images (treated copies live in src/assets)
+public/images/source/

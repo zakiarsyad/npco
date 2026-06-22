@@ -1,0 +1,47 @@
+---
+import { site } from '../../data/site';
+const reassurances = ['Reply within one business day', 'No obligation, no hard sell', 'Talk to real production staff'];
+---
+
+<section id="quote" class="relative overflow-hidden bg-navy-800 py-24 text-white">
+  <div class="grid-motif pointer-events-none absolute inset-0 opacity-40"></div>
+  <div class="pointer-events-none absolute -left-32 bottom-0 size-[30rem] rounded-full bg-amber-500/12 blur-3xl"></div>
+
+  <div class="wrap relative grid items-start gap-12 md:grid-cols-2">
+    <div class="reveal">
+      <p class="eyebrow text-amber-400 [&::before]:bg-amber-400">Get Started</p>
+      <h2 class="mt-3 text-white text-[clamp(2rem,1.6rem+1.8vw,3.2rem)]">Get your free production quote</h2>
+      <p class="mt-4 max-w-[46ch] text-lg text-white/75">
+        Tell us about your product and volume — we'll review your specs and get back to you fast.
+      </p>
+      <ul class="mt-8 space-y-3">
+        {reassurances.map((r) => (
+          <li class="flex items-center gap-3 text-white/85">
+            <svg class="size-5 flex-none text-amber-400" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></svg>
+            {r}
+          </li>
+        ))}
+      </ul>
+      <p class="mt-8 text-white/75">
+        Prefer to talk? Call <a href={site.phoneHref} class="font-semibold text-amber-400 hover:underline">{site.phone}</a>
+      </p>
+    </div>
+
+    <form name="quote" method="POST" data-netlify="true" netlify-honeypot="bot-field" class="reveal grid gap-4 rounded-3xl bg-cloud p-7 text-ink shadow-2xl sm:p-8" style="--reveal-delay:120ms">
+      <input type="hidden" name="form-name" value="quote" />
+      <p hidden><label>Don't fill this out: <input name="bot-field" /></label></p>
+      <div class="grid gap-4 sm:grid-cols-2">
+        <label class="grid gap-1.5 text-sm font-semibold text-navy-800">Name
+          <input type="text" name="name" required class="rounded-xl border border-line bg-white p-3 font-normal text-ink focus:border-navy-600 focus:outline-none" /></label>
+        <label class="grid gap-1.5 text-sm font-semibold text-navy-800">Email
+          <input type="email" name="email" required class="rounded-xl border border-line bg-white p-3 font-normal text-ink focus:border-navy-600 focus:outline-none" /></label>
+      </div>
+      <label class="grid gap-1.5 text-sm font-semibold text-navy-800">Company
+        <input type="text" name="company" class="rounded-xl border border-line bg-white p-3 font-normal text-ink focus:border-navy-600 focus:outline-none" /></label>
+      <label class="grid gap-1.5 text-sm font-semibold text-navy-800">What do you want to produce?
+        <textarea name="message" rows="3" placeholder="e.g. a 12 oz baking mix, ~5,000 units/month" class="rounded-xl border border-line bg-white p-3 font-normal text-ink placeholder:text-muted focus:border-navy-600 focus:outline-none"></textarea></label>
+      <button type="submit" class="btn btn--primary w-full">Request My Quote</button>
+      <p class="text-center text-xs text-muted">We'll only use your details to prepare your quote.</p>
+    </form>
+  </div>
+</section>

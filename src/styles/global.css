@@ -1,0 +1,143 @@
+@import 'tailwindcss';
+
+/* ===========================================================================
+   NPCO REDESIGN — "The Precision Co-Packer"
+   New identity (not NPCO's current brand): navy + amber + oat, Space Grotesk +
+   Inter, precision-grid motif, duotone photography, lightweight motion.
+   See docs/design-system.md.
+   =========================================================================== */
+@theme {
+  /* navy — primary */
+  --color-navy-950: #0a1422;
+  --color-navy-900: #0e1c30;
+  --color-navy-800: #12243c;
+  --color-navy-700: #1c3357;
+  --color-navy-600: #284a76;
+
+  /* amber — accent / CTA (warmer, food-grade, not "safety orange") */
+  --color-amber-700: #a8530a; /* AA-safe amber for small text on light bg */
+  --color-amber-600: #d96b08;
+  --color-amber-500: #f2820d;
+  --color-amber-400: #ff9e2c;
+
+  /* oat — signature warm neutral (reads "dry food") */
+  --color-oat-100: #f7f1e6;
+  --color-oat-200: #efe6d4;
+
+  /* neutrals (warm-tinted) */
+  --color-cloud: #fbfaf7; /* base bg */
+  --color-ink: #15191f;
+  --color-slate: #4b5563;
+  --color-muted: #62707e; /* AA-safe on light backgrounds */
+  --color-line: #e6e2d8;
+
+  /* type */
+  --font-sans: 'Inter Variable', ui-sans-serif, system-ui, sans-serif;
+  --font-display: 'Space Grotesk Variable', 'Inter Variable', ui-sans-serif, sans-serif;
+}
+
+@layer base {
+  html {
+    scroll-behavior: smooth;
+  }
+  body {
+    @apply bg-cloud text-ink font-sans antialiased;
+    line-height: 1.6;
+  }
+  h1,
+  h2,
+  h3 {
+    @apply font-display font-bold text-navy-800;
+    line-height: 1.05;
+    letter-spacing: -0.02em;
+  }
+  :focus-visible {
+    outline: 3px solid var(--color-amber-500);
+    outline-offset: 3px;
+  }
+}
+
+@layer components {
+  .wrap {
+    @apply mx-auto w-full max-w-[1200px] px-6;
+  }
+  .section {
+    @apply py-20 md:py-28;
+  }
+  /* small tracked-out section label */
+  .eyebrow {
+    @apply inline-flex items-center gap-2 text-sm font-bold uppercase tracking-[0.18em] text-amber-700;
+  }
+  .eyebrow::before {
+    content: '';
+    @apply inline-block h-px w-6 bg-amber-500;
+  }
+  .btn {
+    @apply inline-flex items-center justify-center gap-2 rounded-full px-6 py-3 font-display font-semibold transition-all duration-200;
+  }
+  .btn--primary {
+    @apply bg-amber-500 text-navy-950 hover:bg-amber-400;
+  }
+  .btn--dark {
+    @apply bg-navy-800 text-white hover:bg-navy-700;
+  }
+  .btn--ghost {
+    @apply border border-white/30 bg-white/5 text-white hover:bg-white/10;
+  }
+  /* duotone image treatment: grayscale base + navy/amber tint via blend */
+  .duotone {
+    @apply relative isolate overflow-hidden;
+  }
+  .duotone img {
+    @apply size-full object-cover;
+    filter: grayscale(1) contrast(1.05);
+  }
+  .duotone::after {
+    content: '';
+    @apply pointer-events-none absolute inset-0;
+    background: linear-gradient(180deg, rgba(18, 36, 60, 0.55), rgba(10, 20, 34, 0.85));
+    mix-blend-mode: multiply;
+  }
+  /* faint precision grid */
+  .grid-motif {
+    background-image: linear-gradient(rgba(255, 255, 255, 0.06) 1px, transparent 1px),
+      linear-gradient(90deg, rgba(255, 255, 255, 0.06) 1px, transparent 1px);
+    background-size: 56px 56px;
+  }
+}
+
+/* ---- motion: scroll-reveal + marquee, all reduced-motion safe ---- */
+@layer utilities {
+  .reveal {
+    opacity: 0;
+    transform: translateY(18px);
+    transition: opacity 0.6s ease, transform 0.6s ease;
+    transition-delay: var(--reveal-delay, 0ms);
+  }
+  .reveal.in {
+    opacity: 1;
+    transform: none;
+  }
+  @keyframes marquee {
+    to {
+      transform: translateX(-50%);
+    }
+  }
+  .marquee-track {
+    animation: marquee 28s linear infinite;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto;
+  }
+  .reveal {
+    opacity: 1;
+    transform: none;
+    transition: none;
+  }
+  .marquee-track {
+    animation: none;
+  }
+}

@@ -1,0 +1,38 @@
+---
+/**
+ * NPCO logo (concept). Mark = a "quality seal" rounded square holding a clean
+ * monogram "N": two white verticals joined by an amber diagonal (the production
+ * "flow"). Reads top-left → bottom-right like a proper N.
+ * tone: 'dark' for light backgrounds (header), 'light' for dark backgrounds (footer).
+ */
+interface Props {
+  tone?: 'dark' | 'light';
+  showWord?: boolean;
+  class?: string;
+}
+const { tone = 'dark', showWord = true, class: cls = '' } = Astro.props;
+
+const c =
+  tone === 'light'
+    ? { sq: 'rgba(255,255,255,0.08)', stroke: 'rgba(255,255,255,0.28)', bar: '#ffffff', diag: '#ff9e2c', word: '#ffffff', sub: 'rgba(255,255,255,0.6)' }
+    : { sq: '#12243c', stroke: 'transparent', bar: '#ffffff', diag: '#f2820d', word: '#12243c', sub: '#7a8694' };
+---
+
+<span class={`inline-flex items-center gap-3 ${cls}`}>
+  <svg width="40" height="40" viewBox="0 0 48 48" fill="none" aria-hidden="true">
+    <rect x="1.5" y="1.5" width="45" height="45" rx="13" fill={c.sq} stroke={c.stroke} />
+    <!-- N: left vertical, right vertical -->
+    <rect x="13" y="13" width="5" height="22" rx="1.6" fill={c.bar} />
+    <rect x="30" y="13" width="5" height="22" rx="1.6" fill={c.bar} />
+    <!-- diagonal stroke: top-left → bottom-right (proper N), amber -->
+    <path d="M13 13 H18 L35 35 H30 Z" fill={c.diag} />
+  </svg>
+  {showWord && (
+    <span class="flex flex-col leading-none">
+      <span class="font-display text-xl font-bold tracking-tight" style={`color:${c.word}`}>NPCO</span>
+      <span class="mt-0.5 text-[10px] font-semibold uppercase tracking-[0.2em]" style={`color:${c.sub}`}>
+        National Packaging Co.
+      </span>
+    </span>
+  )}
+</span>

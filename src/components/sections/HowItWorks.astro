@@ -1,0 +1,33 @@
+---
+import { process } from '../../data/site';
+---
+
+<section id="how-it-works" class="section bg-oat-100">
+  <div class="wrap">
+    <p class="eyebrow reveal">How It Works</p>
+    <h2 class="reveal mt-3 max-w-[22ch] text-[clamp(2rem,1.6rem+1.8vw,3.2rem)]">
+      From first call to full production — in weeks
+    </h2>
+
+    <ol class="relative mt-14 grid list-none gap-10 p-0 md:grid-cols-5 md:gap-5">
+      <!-- flow line (desktop) -->
+      <span class="absolute left-0 right-0 top-6 hidden h-0.5 bg-gradient-to-r from-amber-500/30 via-amber-500/60 to-amber-500/30 md:block" aria-hidden="true"></span>
+      {process.map((step, i) => (
+        <li class="reveal relative" style={`--reveal-delay:${i * 90}ms`}>
+          <span class="relative z-10 grid size-12 place-items-center rounded-full bg-navy-800 font-display text-lg font-bold text-amber-400 ring-8 ring-oat-100">
+            {step.n}
+          </span>
+          <h3 class="mt-5 font-display text-base">{step.title}</h3>
+          <p class="mt-2 text-sm leading-relaxed text-slate">{step.detail}</p>
+        </li>
+      ))}
+    </ol>
+
+    <div class="reveal mt-12">
+      <a href="#quote" class="btn btn--dark group">
+        Start Step 1 — Book Your Free Call
+        <span class="transition-transform group-hover:translate-x-1">→</span>
+      </a>
+    </div>
+  </div>
+</section>

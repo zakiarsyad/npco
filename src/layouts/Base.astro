@@ -1,0 +1,58 @@
+---
+import '@fontsource-variable/inter';
+import '@fontsource-variable/space-grotesk';
+import '../styles/global.css';
+
+interface Props {
+  title?: string;
+  description?: string;
+}
+const {
+  title = 'NPCO — Contract Manufacturing & Co-Packing for Dry Food Brands',
+  description = 'NPCO is the contract manufacturing, co-packing, and food-grade warehousing partner for dry food brands. 40+ years, family-owned. Get a free production quote.',
+} = Astro.props;
+const canonical = new URL(Astro.url.pathname, Astro.site).toString();
+---
+
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="description" content={description} />
+    <link rel="canonical" href={canonical} />
+    <link rel="icon" href="/favicon.svg" type="image/svg+xml" />
+    <meta property="og:type" content="website" />
+    <meta property="og:title" content={title} />
+    <meta property="og:description" content={description} />
+    <script
+      type="application/ld+json"
+      set:html={JSON.stringify({
+        '@context': 'https://schema.org',
+        '@type': 'LocalBusiness',
+        name: 'National Packaging Co',
+        telephone: '+1-256-260-2979',
+        address: {
+          '@type': 'PostalAddress',
+          streetAddress: '3306 Central PKWY',
+          addressLocality: 'Decatur',
+          addressRegion: 'AL',
+          postalCode: '35603',
+          addressCountry: 'US',
+        },
+      })}
+    />
+    <title>{title}</title>
+  </head>
+  <body>
+    <a
+      href="#main"
+      class="sr-only focus:not-sr-only focus:absolute focus:left-4 focus:top-4 focus:z-[100] focus:rounded-lg focus:bg-navy-800 focus:px-4 focus:py-2 focus:text-white"
+      >Skip to content</a
+    >
+    <slot />
+    <script>
+      import '../scripts/motion.ts';
+    </script>
+  </body>
+</html>

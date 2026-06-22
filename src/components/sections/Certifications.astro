@@ -1,0 +1,34 @@
+---
+import { Image } from 'astro:assets';
+import { certifications } from '../../data/site';
+import sqf from '../../assets/certs/sqf.png';
+import kosher from '../../assets/certs/kosher.png';
+import organic from '../../assets/certs/usda-organic.png';
+import halal from '../../assets/certs/halal.png';
+import nonGmo from '../../assets/certs/non-gmo.png';
+import glutenFree from '../../assets/certs/gluten-free.png';
+import allergenFree from '../../assets/certs/allergen-free.png';
+const badges = { sqf, kosher, 'usda-organic': organic, halal, 'non-gmo': nonGmo, 'gluten-free': glutenFree, 'allergen-free': allergenFree } as const;
+---
+
+<section id="certifications" class="section">
+  <div class="wrap">
+    <div class="reveal max-w-[52ch]">
+      <p class="eyebrow">Certifications</p>
+      <h2 class="mt-3 text-[clamp(2rem,1.6rem+1.8vw,3.2rem)]">Quality you can verify</h2>
+      <p class="mt-4 text-lg text-slate">
+        Audited to the standards your retailers and customers expect — every batch, every time.
+      </p>
+    </div>
+
+    <ul class="reveal mt-12 grid grid-cols-2 gap-4 sm:grid-cols-3 lg:grid-cols-7">
+      {certifications.map((c) => (
+        <li class="group flex flex-col items-center gap-3 rounded-2xl border border-line bg-white p-5 text-center transition-all hover:-translate-y-1 hover:border-amber-500/40 hover:shadow-[0_16px_30px_rgba(10,20,34,0.1)]">
+          <Image src={badges[c.slug]} alt={`${c.name} certification`} width={96} height={96} class="h-14 w-auto object-contain grayscale opacity-70 transition duration-300 group-hover:grayscale-0 group-hover:opacity-100" />
+          <span class="text-xs font-semibold text-navy-800">{c.name}</span>
+        </li>
+      ))}
+    </ul>
+    <p class="reveal mt-6 text-sm text-muted">FDA registered · HACCP-compliant facility.</p>
+  </div>
+</section>

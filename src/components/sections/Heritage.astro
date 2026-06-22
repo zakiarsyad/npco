@@ -1,0 +1,27 @@
+---
+import { heritage } from '../../data/site';
+---
+
+<section class="border-y border-line bg-oat-100" aria-label="Company heritage">
+  <div class="wrap grid gap-10 py-14 lg:grid-cols-[0.85fr_1.15fr] lg:items-center">
+    <div class="reveal">
+      <p class="eyebrow">Why NPCO</p>
+      <h2 class="mt-3 text-[clamp(1.6rem,1.3rem+1.2vw,2.4rem)]">Four decades of food manufacturing</h2>
+      <p class="mt-3 max-w-[44ch] text-slate">
+        A third-generation, family-owned co-packer — founded by the co-inventor of the Ropak
+        packaging machine, trusted by household food brands.
+      </p>
+    </div>
+
+    <dl class="grid grid-cols-2 gap-px overflow-hidden rounded-2xl border border-line bg-line md:grid-cols-4">
+      {heritage.map((item, i) => (
+        <div class="reveal bg-cloud p-6" style={`--reveal-delay:${i * 80}ms`}>
+          <dt class="font-display text-4xl font-bold text-navy-800">
+            <span data-count={item.value} data-suffix={item.suffix} data-format={(item as any).format ?? ''}>0</span>
+          </dt>
+          <dd class="mt-2 text-sm text-muted">{item.label}</dd>
+        </div>
+      ))}
+    </dl>
+  </div>
+</section>

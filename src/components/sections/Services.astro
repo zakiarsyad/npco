@@ -1,0 +1,44 @@
+---
+import { Image } from 'astro:assets';
+import { services } from '../../data/site';
+import mixing from '../../assets/services/mixing.jpg';
+import packaging from '../../assets/services/packaging.jpg';
+import warehousing from '../../assets/services/warehousing.jpg';
+import stickPacks from '../../assets/services/stick-packs.jpg';
+const photos = { mixing, packaging, logistics: warehousing, 'stick-packs': stickPacks } as const;
+---
+
+<section id="services" class="section">
+  <div class="wrap">
+    <p class="eyebrow reveal">What We Do</p>
+    <h2 class="reveal mt-3 max-w-[18ch] text-[clamp(2rem,1.6rem+1.8vw,3.2rem)]">
+      One partner, recipe to retail-ready pallet
+    </h2>
+    <p class="reveal mt-4 max-w-[58ch] text-lg text-slate">
+      Mixing, packaging, and warehousing under one roof — scale without the capital cost of building
+      your own facility.
+    </p>
+
+    <div class="mt-12 grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-4">
+      {services.map((s, i) => (
+        <article class="group reveal relative flex flex-col overflow-hidden rounded-2xl border border-line bg-white transition-all duration-300 hover:-translate-y-1.5 hover:shadow-[0_24px_50px_rgba(10,20,34,0.13)]" style={`--reveal-delay:${i * 90}ms`}>
+          <div class="duotone aspect-[16/10]">
+            <Image src={photos[s.id]} alt={`${s.title} — NPCO facility`} widths={[320, 640]} sizes="(min-width:1024px) 25vw, (min-width:640px) 50vw, 100vw" class="transition-transform duration-500 group-hover:scale-105" />
+          </div>
+          <div class="flex flex-1 flex-col p-6">
+            <h3 class="font-display text-lg min-h-[2.75rem]">{s.title}</h3>
+            <p class="mt-2 text-sm leading-relaxed text-slate">{s.blurb}</p>
+            <ul class="mt-auto space-y-2 border-t border-line pt-4 text-sm text-muted">
+              {s.points.map((p) => (
+                <li class="flex items-start gap-2">
+                  <span class="mt-1.5 size-1.5 flex-none rounded-full bg-amber-500"></span>
+                  {p}
+                </li>
+              ))}
+            </ul>
+          </div>
+        </article>
+      ))}
+    </div>
+  </div>
+</section>

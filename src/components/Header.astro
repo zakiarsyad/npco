@@ -1,0 +1,69 @@
+---
+import Logo from './Logo.astro';
+const nav = [
+  { label: 'Services', href: '#services' },
+  { label: 'Who We Help', href: '#who-we-help' },
+  { label: 'Process', href: '#how-it-works' },
+  { label: 'Certifications', href: '#certifications' },
+];
+---
+
+<header data-header class="fixed inset-x-0 top-0 z-50 transition-all duration-300">
+  <div class="wrap flex items-center justify-between gap-6 py-3" style="height:4.5rem">
+    <a href="#top" aria-label="NPCO — National Packaging Co., home">
+      <span class="logo-light"><Logo tone="light" /></span>
+      <span class="logo-dark"><Logo tone="dark" /></span>
+    </a>
+
+    <nav class="hidden items-center gap-8 lg:flex" aria-label="Primary">
+      {nav.map((l) => <a href={l.href} class="nav-link text-sm font-semibold transition-colors">{l.label}</a>)}
+    </nav>
+
+    <div class="flex items-center gap-3">
+      <a href="#quote" class="btn btn--primary hidden sm:inline-flex">Get a Quote</a>
+      <button class="bars inline-flex flex-col gap-1.5 p-2 lg:hidden" aria-label="Toggle menu" aria-expanded="false" data-menu>
+        <span></span><span></span><span></span>
+      </button>
+    </div>
+  </div>
+
+  <nav class="hidden flex-col gap-1 border-t border-line bg-cloud px-6 py-4 lg:hidden" aria-label="Mobile" data-mobile>
+    {nav.map((l) => <a href={l.href} class="py-2 font-semibold text-navy-700">{l.label}</a>)}
+    <a href="#quote" class="btn btn--primary mt-2">Get a Quote</a>
+  </nav>
+</header>
+
+<script>
+  const header = document.querySelector('[data-header]');
+  const onScroll = () => header?.toggleAttribute('data-scrolled', window.scrollY > 12);
+  onScroll();
+  window.addEventListener('scroll', onScroll, { passive: true });
+
+  const btn = document.querySelector('[data-menu]');
+  const menu = document.querySelector('[data-mobile]');
+  const setMenu = (open) => {
+    menu?.classList.toggle('hidden', !open); // display:none when closed
+    menu?.classList.toggle('flex', open); // display:flex (+ flex-col) when open
+    btn?.setAttribute('aria-expanded', String(open));
+  };
+  btn?.addEventListener('click', () => setMenu(menu?.classList.contains('hidden') ?? false));
+  menu?.querySelectorAll('a').forEach((a) => a.addEventListener('click', () => setMenu(false)));
+</script>
+
+<style>
+  [data-header][data-scrolled] {
+    background: color-mix(in srgb, var(--color-cloud) 88%, transparent);
+    backdrop-filter: blur(10px);
+    box-shadow: 0 1px 0 var(--color-line), 0 8px 30px rgba(10, 20, 34, 0.06);
+  }
+  /* link + logo state swap between transparent-over-hero and scrolled */
+  .nav-link { color: rgba(255, 255, 255, 0.85); }
+  .nav-link:hover { color: #fff; }
+  [data-scrolled] .nav-link { color: var(--color-navy-700); }
+  [data-scrolled] .nav-link:hover { color: var(--color-amber-600); }
+  .logo-dark { display: none; }
+  [data-scrolled] .logo-light { display: none; }
+  [data-scrolled] .logo-dark { display: inline-flex; }
+  .bars span { height: 2px; width: 24px; border-radius: 2px; background: #fff; transition: background 0.2s; }
+  [data-scrolled] .bars span { background: var(--color-navy-800); }
+</style>

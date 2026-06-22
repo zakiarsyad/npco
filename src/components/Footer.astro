@@ -1,0 +1,44 @@
+---
+import Logo from './Logo.astro';
+import { site } from '../data/site';
+const year = new Date().getFullYear();
+const nav = [
+  { label: 'Services', href: '#services' },
+  { label: 'Who We Help', href: '#who-we-help' },
+  { label: 'Process', href: '#how-it-works' },
+  { label: 'Certifications', href: '#certifications' },
+];
+---
+
+<footer class="bg-navy-950 pt-16 pb-8 text-white/70">
+  <div class="wrap grid gap-10 md:grid-cols-[1.4fr_1fr_auto]">
+    <div>
+      <Logo tone="light" />
+      <p class="mt-4 max-w-[34ch] text-sm text-white/55">
+        Contract manufacturing &amp; co-packing for dry food brands — mixing, packaging, and
+        warehousing under one roof.
+      </p>
+    </div>
+
+    <nav aria-label="Footer">
+      <p class="text-sm font-semibold uppercase tracking-[0.18em] text-white/60">Explore</p>
+      <ul class="mt-4 space-y-2 text-sm">
+        {nav.map((l) => <li><a href={l.href} class="text-white/65 hover:text-white">{l.label}</a></li>)}
+      </ul>
+    </nav>
+
+    <div>
+      <p class="text-sm font-semibold uppercase tracking-[0.18em] text-white/60">Contact</p>
+      <address class="mt-4 space-y-2 text-sm not-italic text-white/65">
+        <p>{site.address}</p>
+        <p><a href={site.phoneHref} class="font-semibold text-amber-400 hover:underline">{site.phone}</a></p>
+      </address>
+      <a href="#quote" class="btn btn--primary mt-5">Get a Quote</a>
+    </div>
+  </div>
+
+  <div class="wrap mt-12 flex flex-col gap-2 border-t border-white/10 pt-6 text-xs text-white/60 sm:flex-row sm:items-center sm:justify-between">
+    <p>© {year} {site.name}. All rights reserved.</p>
+    <p>Concept redesign — not affiliated. {site.agency}. · Photography via Unsplash.</p>
+  </div>
+</footer>

@@ -1,0 +1,47 @@
+---
+import { testimonials, clients } from '../../data/site';
+
+// Dummy SVG logo marks (one per client, same order). Simple monochrome lockups
+// for the concept pitch — replaced with NPCO's real client logos on engagement.
+const marks = [
+  '<circle cx="12" cy="14" r="4"/><path d="M12 4v2M6 8l1.4 1.4M18 8l-1.4 1.4M3 14h2M19 14h2M3 19h18"/>', // sun
+  '<path d="M6 8h9v5a4 4 0 0 1-4 4H10a4 4 0 0 1-4-4z"/><path d="M15 9h2a2 2 0 0 1 0 4h-2"/><path d="M8 4v1.5M11 3.5V5M14 4v1.5"/>', // cup
+  '<path d="M3 19l5-9 3 5 2.5-4L20 19z"/>', // mountains
+  '<path d="M4 20C4 12 11 5 20 4c1 9-6 16-15 16z"/><path d="M5 19C9 15 13 11 18 8"/>', // leaf
+  '<circle cx="12" cy="12" r="8.5"/><path d="M12 6.5l2.2 5.5-2.2 5.5-2.2-5.5z"/>', // compass
+  '<path d="M3.5 11.5 12 4l8.5 7.5"/><path d="M6 10.5V19h12v-8.5"/>', // house
+];
+---
+
+<section id="social-proof" class="section bg-oat-100">
+  <div class="wrap">
+    <p class="eyebrow reveal">Social Proof</p>
+    <h2 class="reveal mt-3 max-w-[22ch] text-[clamp(2rem,1.6rem+1.8vw,3.2rem)]">
+      Trusted by growing food brands
+    </h2>
+
+    <div class="mt-12 grid grid-cols-1 gap-6 md:grid-cols-3">
+      {testimonials.map((t, i) => (
+        <figure class="reveal flex flex-col rounded-2xl border border-line bg-cloud p-7" style={`--reveal-delay:${i * 90}ms`}>
+          <svg class="size-8 text-amber-500/40" viewBox="0 0 24 24" fill="currentColor"><path d="M10 7H6a2 2 0 0 0-2 2v8h6v-6H7s0-2 3-2V7zm10 0h-4a2 2 0 0 0-2 2v8h6v-6h-3s0-2 3-2V7z"/></svg>
+          <blockquote class="mt-4 flex-1 text-slate">{t.quote}</blockquote>
+          <figcaption class="mt-5 border-t border-line pt-4 font-display font-semibold text-navy-800">
+            {t.name}<span class="font-sans font-normal text-muted"> — {t.role}, {t.brand}</span>
+          </figcaption>
+        </figure>
+      ))}
+    </div>
+
+    <div class="reveal mt-10 rounded-2xl border border-line bg-cloud p-8 text-center">
+      <p class="text-sm font-semibold uppercase tracking-[0.18em] text-muted">A few of the brands we co-pack for</p>
+      <div class="mt-6 flex flex-wrap items-center justify-center gap-x-7 gap-y-4 lg:flex-nowrap lg:gap-x-9">
+        {clients.map((c, i) => (
+          <span class="group inline-flex items-center gap-2 whitespace-nowrap text-navy-800/45 transition-colors hover:text-navy-800/80">
+            <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" set:html={marks[i]} />
+            <span class="font-display text-base font-bold">{c}</span>
+          </span>
+        ))}
+      </div>
+    </div>
+  </div>
+</section>
