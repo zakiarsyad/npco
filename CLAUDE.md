@@ -4,37 +4,42 @@ Context for AI sessions on this repo. Read `docs/index.md` for the full picture.
 
 ## What this is
 
-A **single landing page** to pitch **National Packaging Co (NPCO)** — a contract manufacturer / co-packer for dry food products — to target clients. Not an app, not multi-page.
+An agency **concept redesign of npcoinc.com** — a polished single-page homepage we build to pitch **National Packaging Co (NPCO)** (contract manufacturer / co-packer for dry food) and win the redesign work. It's a redesign, not a rebuild: new identity, not NPCO's lifted assets.
 
 ## Stack
 
-- **Astro** (static output) + **Tailwind CSS** + **TypeScript**, deployed on **Netlify**.
-- ~Zero client JS. Only vanilla JS = the mobile-menu toggle. No React.
-- Quote form uses **Netlify Forms** (`data-netlify="true"`).
+- **Astro** (static) + **Tailwind CSS v4** (`@tailwindcss/vite`) + **TypeScript** → **Netlify**.
+- Self-hosted fonts: **Space Grotesk** (display) + **Inter** (body) via `@fontsource-variable`.
+- ~Zero framework JS. Motion = small vanilla `IntersectionObserver` (reveals + stat count-up) in `src/scripts/motion.ts`, plus the header/menu script. Astro inlines them.
+- Quote form = **Netlify Forms** (`data-netlify`).
 
 ## Commands
 
 ```
-npm run dev       # local dev (http://localhost:4321)
-npm run build     # static build → dist/
-npm run preview   # preview the build
-npm run check     # type-check
-npm run capture   # re-run Playwright screenshot research (docs/capture.mjs)
+npm run dev      # local dev (http://localhost:4321)
+npm run build    # static build → dist/
+npm run preview  # preview the build
+npm run check    # type-check
+npm run audit    # tools/full-audit.mjs — contrast, links, animation, responsive, Lighthouse
+npm run shots    # tools/shoot-local.mjs — screenshots → docs/shots/
+npm run images   # tools/find-images.mjs — Unsplash sourcing (needs .env: UNSPLASH_ACCESS_KEY)
 ```
 
 ## Conventions
 
-- **All copy/content lives in `src/data/site.ts`** — edit content there, not in markup.
-- **Sections** are one `.astro` file each in `src/components/sections/`, composed by `src/pages/index.astro`.
-- **Design tokens** live in a Tailwind `@theme` block in `src/styles/global.css` (brand navy/orange + font). Reusable classes (`.btn`, `.wrap`, `.section`) are `@layer components`.
-- **Exactly one `<h1>`** on the page (in Hero). Section headings are `<h2>`. (The current live site has *no* h1 — that's a bug we're fixing.)
-- **Palette:** navy primary + orange accent (orange = CTAs/highlights only, never full-width bands).
-- **Never ship fabricated content.** No fake testimonials, client names, logos, or unverified certifications. Placeholder content stays visibly labeled until NPCO supplies the real thing (`docs/content-needed.md`).
+- **Content lives in `src/data/site.ts`** — edit there, not in markup.
+- **Sections** = one `.astro` each in `src/components/sections/`, composed by `src/pages/index.astro`.
+- **Design tokens** = Tailwind `@theme` in `src/styles/global.css`. Palette: **navy + amber + oat** (amber = CTAs/accents only). Reusable classes (`.btn`, `.wrap`, `.section`, `.eyebrow`, `.duotone`, `.reveal`) are `@layer`.
+- **Logo** is a drawn SVG (`src/components/Logo.astro`), not NPCO's file.
+- **Photography** is treated **duotone** (`.duotone`) — never raw.
+- **Exactly one `<h1>`** (Hero); sections use `<h2>`. (The live NPCO site has none — we fix that.)
+- **AA contrast** required (`npm run audit` checks it). **`prefers-reduced-motion`** must show all content.
+- **Demo content** (testimonials, client logos) is clearly labeled concept/sample and replaced with real approved content on engagement (`docs/content-needed.md`). Real third-party cert marks are shown as-is.
 
-## Current status
+## Status
 
-Scaffold finished on-stack: Astro + **Tailwind integrated**, section **stubs** wired to `site.ts`, `npm run build` passes (~0 KB JS, single `<h1>`). Next: **section build-out** (hero imagery, persona tabs, timeline, hover states). See `docs/decision.md` §7.
+Built + audited: **Lighthouse Performance 99 · A11y 100 · Best-Practices 100 · SEO 100**, LCP ~2.1s, CLS 0. Not yet deployed. Reusable tooling in `tools/`.
 
 ## Docs
 
-`docs/index.md` (map) · `brief.md` (original brief) · `research.md` (live-site audit) · `decision.md` (decisions/stack) · `spec.md` (section spec) · `design-system.md` (visual language) · `content-needed.md` (NPCO to supply).
+`docs/index.md` (map) · `brief.md` (original brief) · `research.md` (live-site + experience audit) · `decision.md` (mandate/direction/stack) · `design-system.md` (identity) · `spec.md` (sections) · `content-needed.md` (pitch content stance).

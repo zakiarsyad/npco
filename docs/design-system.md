@@ -1,76 +1,99 @@
-# NPCO Landing Page — Design System
+# NPCO Redesign — Design System (new identity)
 
-> The visual language. Tokens here are the single source of truth, implemented as a Tailwind `@theme` block in `src/styles/global.css` (see `decision.md` §3). Change a value in `@theme` → it propagates through every utility class.
+> The **redesigned** visual language for the NPCO concept. This is original work, not NPCO's current brand. Tokens live in a Tailwind `@theme` block in `src/styles/global.css`. Direction: **"The Precision Co-Packer"** — industrial precision + food-grade warmth (see `decision.md` §2).
 
 ---
 
-## Palette
+## Logo (redesigned)
 
-Verified from the live site (`research.md`): NPCO is **already navy-blue primary + orange accent**. We keep it and fix execution. Orange is for **CTAs and highlights only** — never full-width section bands.
+A new mark + wordmark, drawn as SVG (in `src/components/Logo.astro`):
+- **Mark:** a rounded-square "quality seal" containing an abstract **"N" formed from a rising flow** (product scaling up the production line), navy with a single amber fill-dot (a product/grain).
+- **Wordmark:** `NPCO` in the display face (Space Grotesk), with `NATIONAL PACKAGING CO.` as small tracked-out subtext.
+- Two lockups: full (mark + wordmark) for header/footer; mark-only for favicon.
+- Reversible: navy-on-light and white/amber-on-dark.
 
-| Token | Hex | Use |
+> This replaces NPCO's lifted PNG logo. If NPCO engages, we'd refine against their real brand assets.
+
+---
+
+## Palette (redesigned — navy + amber + oat)
+
+We keep the navy+orange **equity** but make it intentional and add the signature **oat/cream** neutral that reads "dry food / food-grade."
+
+| Token | Hex | Role |
 | --- | --- | --- |
-| `--color-navy-900` | `#0f1f3a` | Footer bg, deepest surfaces |
-| `--color-navy-800` | `#16284a` | **Primary** — hero bg, headings |
-| `--color-navy-700` | `#1e3a5f` | Secondary navy |
-| `--color-navy-600` | `#2b4f7e` | Hover/edge navy |
-| `--color-orange-600` | `#d96b12` | CTA hover |
-| `--color-orange-500` | `#ef7c1a` | **Accent / CTA** |
-| `--color-orange-400` | `#f7942f` | Accent on dark |
-| `--color-ink` | `#1a1d23` | Body text |
-| `--color-slate` | `#4a5568` | Secondary text |
-| `--color-muted` | `#6b7280` | Tertiary/captions |
-| `--color-line` | `#e5e7eb` | Borders/dividers |
-| `--color-surface` | `#f7f8fa` | Alternating section bg |
-| `--color-white` | `#ffffff` | Base bg |
+| `--color-navy-950` | `#0a1422` | deepest bg |
+| `--color-navy-900` | `#0e1c30` | dark sections |
+| `--color-navy-800` | `#12243c` | **primary** / headings |
+| `--color-navy-700` | `#1c3357` | secondary navy / borders on dark |
+| `--color-amber-500` | `#f2820d` | **accent / CTA** (warmer, more refined than the old "safety orange") |
+| `--color-amber-400` | `#ff9e2c` | accent on dark |
+| `--color-amber-600` | `#d96b08` | CTA hover |
+| `--color-oat-100` | `#f7f1e6` | **signature** warm surface |
+| `--color-oat-200` | `#efe6d4` | warm surface 2 / borders |
+| `--color-ink` | `#15191f` | body text |
+| `--color-slate` | `#4b5563` | secondary text |
+| `--color-muted` | `#7a8694` | captions |
+| `--color-line` | `#e6e2d8` | hairlines (warm-tinted) |
+| `--color-cloud` | `#fbfaf7` | base bg (warm white, not stark white) |
 
-**Contrast rule:** body/heading text must hit WCAG AA (≥ 4.5:1). On imagery, always use the dark overlay.
+Rhythm: alternate **warm-white / oat / navy** bands (not the old stark white/orange stacking). Amber stays for CTAs + highlights only.
 
-> ⚠️ Exact brand hexes are approximated from screenshots. Before launch, confirm official navy/orange values with NPCO (or sample from their logo file).
-
----
-
-## Typography
-
-- **Family:** system sans stack (`--font-sans`) — zero font-loading cost, instant render. Swap to a brand webfont later only if required (document the trade-off then).
-- **Scale:** fluid via `clamp()` — `--text-sm` → `--text-3xl`. Headings `font-weight: 800`, `letter-spacing: -0.02em`, `line-height: 1.1`. Body `line-height: 1.6`.
-- **Heading semantics:** one `<h1>` (Hero) → `<h2>` per section → `<h3>` for cards/steps.
+> ⚠️ Hexes are our redesign proposal, not NPCO's official brand. Confirm/merge with their real values if engaged.
 
 ---
 
-## Spacing & layout
+## Typography (redesigned — real typefaces, self-hosted)
 
-- **Spacing:** use Tailwind's default scale (`p-6`, `py-24`, `gap-4`…) — consistent rhythm, no arbitrary values. This is what fixes the current site's "no rhythm" problem.
-- **Container:** `.wrap` component class = `max-w-[1180px]`, centered, `px-6`.
-- **Section padding:** `.section` = `py-24`. Alternate `white` / `bg-surface` for rhythm (no solid color-band stacking).
-- **Radius/shadow:** Tailwind defaults (`rounded-2xl`, `shadow-sm`); brand-specific button radius via `.btn`.
+- **Display / headings:** **Space Grotesk** (variable, self-hosted via `@fontsource-variable/space-grotesk`) — technical, geometric, precise → "precision manufacturing."
+- **Body / UI:** **Inter** (variable, self-hosted) — neutral, legible at small sizes.
+- Replaces the placeholder system-font stack. Subset + `font-display: swap`; ~1 weight range each → minimal load cost.
+- **Scale:** fluid `clamp()`. Display weights 600–700, tight tracking (`-0.02em`); body 400–500, `line-height` 1.6.
+- **Heading semantics:** one `<h1>` (Hero) → `<h2>` per section → `<h3>` cards/steps.
+
+---
+
+## Motif — "precision grid + flow"
+
+Ownable graphic language used as accents (SVG/CSS, near-zero weight):
+- **Measured grid / ruler ticks** — faint lines, corner ticks on cards and the hero.
+- **Flow line** — a thin amber line that traces the journey mixing → packaging → warehousing (used in How It Works and as section dividers).
+- **Fill-level bars** — small navy/amber bars echoing batch/fill (stats, list bullets).
+
+---
+
+## Photography — art-directed, not "dropped in"
+
+NPCO's raw factory photos are **treated**, never used raw:
+- **Duotone** (navy shadows → oat/amber highlights) for a consistent, branded grade.
+- Uniform aspect ratios + generous crops; subtle grain.
+- Hero: duotone factory with a navy gradient scrim + slow ken-burns/parallax.
+- This treatment is what turns "reuse" into "redesign."
 
 ---
 
 ## Components
 
-- **Buttons:** `.btn` base; `.btn--primary` (orange, primary CTA), `.btn--ghost` (outline on dark). One primary action per view.
-- **Cards:** white, `--color-line` border, `--radius-lg`, `--shadow-sm`; used by Services / Who We Help.
-- **Badges:** pill, white on `--color-surface`, navy text; Certifications.
-- **Stat block:** big navy number + muted label; Heritage bar.
+- **Buttons:** `.btn` base; `.btn--primary` (amber), `.btn--ghost` (outline on dark), animated arrow on hover. One primary action per view.
+- **Cards:** warm-white, hairline border, corner tick, hover lift + image zoom.
+- **Stat block:** large Space Grotesk number (count-up) + muted label.
+- **Pill / eyebrow:** small tracked-out label over each section.
+- **Marquee:** continuous CSS scroll for certs/clients.
+
+---
+
+## Motion (see `decision.md` §5)
+
+Scroll-reveal, count-up, hover lift/zoom, marquee, hero parallax — **vanilla IntersectionObserver + CSS only**, ≤ ~2 KB JS, all gated by `prefers-reduced-motion`. No jQuery/slick/GSAP.
+
+---
+
+## Accessibility
+
+AA contrast (verify amber-on-navy and text-on-oat) · visible `:focus-visible` (amber) · keyboard-operable menu/tabs · semantic landmarks · ordered list for process · reduced-motion respected · descriptive `alt` · duotone never reduces text contrast (text sits on scrims, not raw image).
 
 ---
 
 ## Voice & tone
 
-- **Confident, professional, approachable** — B2B manufacturing, not casual startup.
-- **Cut the chatty copy.** Drop "So your food business is growing — congrats!" Keep benefit-led, specific lines.
-- **Numbers sell:** prefer "50 lbs – 10,000 lbs", "65,000 sq-ft", "40 years" over vague claims.
-- **Keywords (natural, not stuffed):** contract manufacturing, co-packing, dry food production, private label, food packaging.
-
----
-
-## Accessibility baseline
-
-- AA contrast · visible `:focus-visible` outline (orange) · keyboard-operable menu/tabs · semantic landmarks (`header`/`main`/`footer`) · ordered list for the process · `prefers-reduced-motion` respected · descriptive image `alt`.
-
----
-
-## Motion
-
-Subtle and optional. Allowed: gentle hover transitions, one count-up on the heritage stats (progressive enhancement). Avoid: scroll-jacking, parallax, anything that delays LCP or hurts the performance budget.
+Confident, precise, partner-not-vendor. Cut the chatty current copy. Numbers sell ("50–10,000 lb batches", "65,000 sq-ft", "40 years"). Keywords natural: contract manufacturing, co-packing, dry food, private label.

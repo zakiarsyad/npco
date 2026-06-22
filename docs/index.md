@@ -1,37 +1,27 @@
-# NPCO Project Docs — Index
+# NPCO Redesign — Docs Index
 
-Documentation for the NPCO pitch landing page. Read in this order.
+Agency **concept redesign** of npcoinc.com, built to pitch NPCO and win the work.
 
-| Doc | What it covers | Status |
+| Doc | Covers | Status |
 | --- | --- | --- |
-| [`brief.md`](./brief.md) | Original redesign strategy brief (unmodified source of record) | Frozen |
-| [`research.md`](./research.md) | Verified live-site findings — Playwright render of npcoinc.com + casesbysource.com (desktop + mobile) | Done |
-| [`decision.md`](./decision.md) | Locked decisions: scope, direction, **stack (Astro + Tailwind + Netlify)**, goals, build sequence | Current |
-| [`spec.md`](./spec.md) | Section-by-section build spec for the single landing page | Current |
-| [`design-system.md`](./design-system.md) | Visual language — palette, type, spacing, components, voice, a11y | Current |
-| [`content-needed.md`](./content-needed.md) | Checklist of real content required from NPCO before launch | Open 🟡 |
+| [`brief.md`](./brief.md) | Original strategy brief (source of record) | Frozen |
+| [`research.md`](./research.md) | Verified live-site findings + **experience/interaction audit** of NPCO & CBS | Done |
+| [`decision.md`](./decision.md) | Mandate (redesign, not rebuild), direction, scope, stack, **motion system**, plan | Current |
+| [`design-system.md`](./design-system.md) | **New identity** — logo, navy+amber+oat palette, Space Grotesk/Inter, motif, duotone photo | Current |
+| [`spec.md`](./spec.md) | Section + interaction spec | Current |
+| [`content-needed.md`](./content-needed.md) | Pitch content stance + what we'd collect on engagement | Open 🟡 |
 
 ## TL;DR
-
-- **What:** one **landing page** to pitch NPCO (contract food manufacturer / co-packer) to target clients.
-- **Direction:** "Heritage Trust + Industrial Precision" — lead with the 40-yr / Ropak / 3rd-gen-family story; keep the existing navy + orange palette; fix execution.
-- **Stack:** **Astro + Tailwind CSS + TypeScript on Netlify**, ~zero JS, Netlify Forms for the quote form.
-- **Status:** scaffold + section **stubs** built; **documenting before build-out**. Awaiting NPCO content (`content-needed.md`).
-
-## Repo map
-
-```
-/                     Astro project root
-  src/                site source (pages, layouts, components, data, styles)
-  public/             static assets
-  docs/               ← you are here (planning + decisions + spec)
-  docs/shots/         live-site research screenshots (git-ignored; regenerate via `npm run capture`)
-  astro.config.mjs · netlify.toml · package.json
-```
+- **What:** one **concept homepage** redesigning npcoinc.com, as an agency pitch.
+- **Direction:** "The Precision Co-Packer" — industrial precision + food-grade warmth. Redesigned logo, **navy + amber + oat** palette, real typefaces, precision-grid/flow motif, duotone photography.
+- **Experience:** tasteful motion (scroll reveals, count-ups, hover, marquee, hero parallax) — **richer than CBS, lighter than NPCO**, vanilla JS + CSS only.
+- **Stack:** Astro + Tailwind v4 + TS → Netlify, ~0 KB framework JS, Lighthouse ≥ 95 target.
 
 ## Key facts (verified)
+- Contract manufacturer / co-packer for **dry food products**.
+- **40+ yrs**, **3rd-gen family-owned**, founded by the **co-inventor of the Ropak packaging machine**, **65,000 sq-ft** warehouse.
+- 3306 Central PKWY, Decatur AL 35603 · (256) 260-2979.
+- Current site: **no `<h1>`**, zero motion design — the redesign fixes both.
 
-- Business: contract manufacturer / co-packer for **dry food products**.
-- Heritage: **40+ years**, **3rd-generation family-owned**, founded by the **co-inventor of the Ropak packaging machine**, **65,000 sq-ft** warehouse.
-- Contact: 3306 Central PKWY, Decatur AL 35603 · (256) 260-2979.
-- Current-site bug to fix: homepage has **no `<h1>`**.
+## Tooling (`tools/`)
+`full-audit.mjs` (`npm run audit` — contrast, links, animation, responsiveness, Lighthouse) · `shoot-local.mjs` (`npm run shots`) · `find-images.mjs` (`npm run images` — Unsplash sourcing, needs `.env`). Screenshots → `docs/shots/` (git-ignored).

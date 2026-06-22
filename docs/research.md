@@ -120,6 +120,30 @@
 
 ---
 
+## E. Experience & Interaction Audit (live, Playwright — 2026-06-22)
+
+> Actually visited and interacted with both sites (hover, scroll, inspect). Detected animation tech, motion, carousels, video, sticky behavior, and performance. Raw data: `docs/experience-audit.json`. Script: `docs/audit-experience.mjs`.
+
+### NPCO (npcoinc.com) — the experience is **static**
+- **Tech:** WordPress. Only ~383 DOM elements, 10 scripts. **No animation libraries** (no GSAP, AOS, Swiper, jQuery).
+- **Motion:** essentially none — **0 CSS animations**, just 13 transitions + 3 transforms total. No scroll reveals, no carousels, no count-ups.
+- **Hero "video":** 1 `<video>`, **not autoplay** — so the hero is effectively a static poster (the "broken video" impression in the brief makes sense).
+- **Interactions:** basic hover color-shifts on buttons/links only. Sticky header: yes.
+- **Performance:** light + fast (FCP ~1.5s) precisely *because* it does almost nothing.
+- **Verdict:** flat, dated, motionless. **Zero microinteraction design = a wide-open opportunity.**
+
+### Cases By Source (casesbysource.com) — the experience is **rich but heavy**
+- **Tech:** jQuery + **slick** carousel. ~967 elements, **66 scripts**, 5 iframes.
+- **Motion:** **202 transitions + 40 transforms**, **2 autoplay videos**, **1 slick carousel** (personas/testimonials). Scroll-reveal feel, hover effects on product/case cards.
+- **Interactions:** persona tabs, testimonial carousel, sticky "Request Consultation" pill, live-chat widget.
+- **Performance:** heavy — 66 scripts, third-party bloat; full load was slow (~30s in test) though CDN FCP was fast.
+- **Verdict:** polished and alive, but **over-engineered and heavy**. Good *ideas*, bad *weight*.
+
+### Implication for our redesign (the agency angle)
+The win is **"more alive than CBS, lighter than NPCO."** With Astro we can deliver tasteful, performant motion — scroll reveals, stat count-ups, hover microinteractions, duotone hero with subtle parallax, a CSS logo marquee — using a **tiny IntersectionObserver + CSS** (no jQuery, no slick, no GSAP). Target: richer experience than both, **Lighthouse ≥ 95**. This is a concrete, demonstrable selling point when we pitch NPCO.
+
+---
+
 ## D. Reproduce / re-capture
 
 ```bash

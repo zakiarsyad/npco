@@ -1,15 +1,18 @@
-# NPCO Landing Page
+# NPCO — Concept Redesign
 
-Single-page pitch site for **National Packaging Co (NPCO)** — a contract manufacturer / co-packer for dry food products.
+An agency **concept redesign of [npcoinc.com](https://npcoinc.com/)** — a single, fast, polished homepage built to pitch **National Packaging Co** (contract manufacturer / co-packer for dry food) and win the redesign. A redesign, not a rebuild: new logo, palette, type, motion, and art-directed photography.
 
 ## Stack
 
-- **[Astro](https://astro.build)** — static output, ~zero client JS
-- **[Tailwind CSS](https://tailwindcss.com)** — design tokens via `@theme` (ported from `src/styles/tokens.css`)
+- **[Astro](https://astro.build)** — static output, ~zero framework JS
+- **[Tailwind CSS v4](https://tailwindcss.com)** (`@tailwindcss/vite`) — tokens in a `@theme` block in `src/styles/global.css`
+- **Space Grotesk + Inter**, self-hosted via `@fontsource-variable`
+- Motion = tiny vanilla `IntersectionObserver` (scroll reveals + stat count-up), inlined
 - **Netlify** — hosting + [Netlify Forms](https://docs.netlify.com/forms/setup/) for the quote form
-- No React / no framework runtime (one small vanilla-JS snippet for the mobile menu)
 
-> Tailwind v4 is integrated via `@tailwindcss/vite`; design tokens live in a `@theme` block in `src/styles/global.css` (see `docs/decision.md` §3).
+## Quality (audited)
+
+Lighthouse mobile: **Performance 99 · Accessibility 100 · Best Practices 100 · SEO 100** · LCP ~2.1s · CLS 0. Single `<h1>`, AA contrast, `prefers-reduced-motion` safe, 0px overflow 320–1440.
 
 ## Commands
 
@@ -19,27 +22,28 @@ Single-page pitch site for **National Packaging Co (NPCO)** — a contract manuf
 | `npm run dev` | Local dev server (http://localhost:4321) |
 | `npm run build` | Build static site to `dist/` |
 | `npm run preview` | Preview the production build |
-| `npm run check` | Type-check Astro components |
-| `npm run capture` | Re-run the Playwright screenshot research (`docs/capture.mjs`) |
+| `npm run audit` | Full audit — contrast, links, animation, responsive, Lighthouse |
+| `npm run shots` | Screenshot the local build → `docs/shots/` |
+| `npm run images` | Source images from Unsplash (needs `.env` → `UNSPLASH_ACCESS_KEY`) |
 
 ## Structure
 
 ```
 src/
-  pages/index.astro          # the one page — composes the sections
-  layouts/Base.astro         # <head>, meta, schema, global CSS
+  pages/index.astro       # the page — composes all sections
+  layouts/Base.astro      # <head>, meta, schema, fonts, global CSS
   components/
-    Header.astro             # sticky nav + mobile menu + "Get a Quote"
+    Logo.astro            # redesigned SVG logo (mark + wordmark)
+    Header.astro          # sticky nav, transparent→solid on scroll, mobile menu
     Footer.astro
-    sections/                # one file per homepage section (STUBs → built incrementally)
-  data/site.ts               # all copy/content (verified facts + PLACEHOLDERs)
-  styles/global.css          # Tailwind import + @theme design tokens + base/components
-public/                      # static assets (favicon, images)
-docs/                        # planning: brief.md, research.md, decision.md, capture.mjs, shots/
+    sections/             # one .astro per homepage section
+  data/site.ts            # all copy/content (verified facts + labeled demo content)
+  scripts/motion.ts       # scroll-reveal + count-up (reduced-motion safe)
+  styles/global.css       # Tailwind + @theme tokens + base/components
+  assets/                 # duotone-treated photography + cert marks
+public/                   # favicon, static assets
+docs/                     # brief, research, decisions, design system, spec
+tools/                    # audit + screenshot + image-sourcing scripts
 ```
 
-## Status
-
-Scaffold + section **stubs** in place. Sections are wired and render real content from `src/data/site.ts`; visual build-out (hero imagery, persona tabs, timeline, hover states) is the next step. Items marked `PLACEHOLDER` in `site.ts` need real content from NPCO (testimonials, exact certifications, Stick Packs specs, photos).
-
-See `docs/decision.md` for the locked decisions and `docs/research.md` for the verified live-site findings.
+See `docs/index.md` for the full documentation map.

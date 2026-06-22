@@ -1,19 +1,18 @@
 # NPCO Redesign — Decision Doc
 
-> Purpose: lock the decisions everything else depends on, **before** building.
-> Inputs: `brief.md` (original strategy brief, unmodified) + `research.md` (verified Playwright findings on both live sites).
-> Companion: `spec.md` (section-by-section build spec), `design-system.md` (tokens/visual language), `content-needed.md` (what NPCO must supply).
-> Status legend: ✅ Decided · 🟡 Needs content from NPCO · ⏭️ Next step.
+> **Context:** We are a **web design agency**. We are producing a **concept redesign of npcoinc.com** as a pitch — a polished, working homepage we send to NPCO to win them as a client by showing (not telling) how much better their web presence can be.
+> **Inputs:** `brief.md` (original strategy brief) · `research.md` (verified live-site + experience/interaction audit of NPCO & CBS).
+> **Companions:** `design-system.md` (the new visual identity) · `spec.md` (section + interaction spec) · `content-needed.md` (demo-content stance + what we'd collect once engaged).
+> Status: ✅ Decided · 🟡 Demo placeholder · ⏭️ Next.
 
 ---
 
-## 0. Scope — ✅ Decided (changed)
+## 0. Mandate — ✅ Decided (this is a REDESIGN, not a rebuild)
 
-**A single landing page** used to **pitch NPCO to target clients**. Not an app. Not a multi-page site.
-
-- One page (`/`), composed of sections.
-- No customer login, e-commerce, dashboards, or blog (considered and cut).
-- The earlier multi-page sitemap is **dropped**. Service/about/cert "pages" become **sections** on the one page (anchor links).
+- We are **redesigning**, not preserving. We do **not** lift NPCO's existing assets verbatim. New logo, new palette system, new type, new motion, art-directed photography.
+- Their photos may be used **as reference / treated placeholders** (duotone, graded) — never dropped in raw. Third-party certification marks (SQF, Kosher…) are standard and shown as-is.
+- The artifact is a **single concept homepage** that works, loads fast, and feels unmistakably new while staying credibly "NPCO" (a 40-year food manufacturer).
+- **Goal of the artifact:** be impressive enough that NPCO says "yes, redesign our site."
 
 ---
 
@@ -21,86 +20,81 @@
 
 | Goal | Concretely | Check |
 | --- | --- | --- |
-| **UI/UX** | Unified hero, clear rhythm (no stacked solid color-bands), strong hierarchy | Design review vs. current-site screenshots |
-| **Domain expertise** | 40-yr / Ropak-inventor / 3rd-gen-family / household-brand story above the fold | Heritage visible in first screen |
-| **Web conversion** | One persistent "Get a Quote" CTA + social proof + clear process | Sticky CTA all breakpoints; form reachable in 1 click |
-| **Web performance** | Near-zero JS, optimized images, no layout shift | Lighthouse ≥ 95 mobile; LCP < 2.0s |
-| **SEO** | Fix missing `<h1>`, proper headings, schema, meta | Single valid H1; LocalBusiness schema present |
+| **Wow / pitch impact** | Looks like a premium 2026 B2B brand, not a WordPress template | Side-by-side vs. current site is night-and-day |
+| **Experience / motion** | Tasteful scroll reveals, count-ups, hover microinteractions | "More alive than CBS, lighter than NPCO" |
+| **Domain expertise** | 40-yr / Ropak / 3rd-gen-family heritage is a hero element | Visible above the fold |
+| **Conversion** | Persistent "Get a Quote" + social proof + clear process | Sticky CTA all breakpoints |
+| **Performance** | Rich motion with near-zero JS weight | Lighthouse ≥ 95 mobile; LCP < 2.0s |
+| **SEO** | Single `<h1>` (current site has none), schema, semantic headings | Validated in build |
 
 ---
 
-## 2. Direction — ✅ Decided
+## 2. Design direction — ✅ Decided
 
-**"Heritage Trust + Industrial Precision"** (merge of brief Directions #3 Trust-First + #1 Industrial Precision).
+**"The Precision Co-Packer" — industrial precision meets food-grade warmth.**
 
-- **Lead with heritage, not just certs.** Surface "40 years · co-inventor of the Ropak packaging machine · 3rd-generation family-owned · trusted by household brands." NPCO's strongest, hardest-to-copy asset (verified, currently buried).
-- **Keep the existing palette** (navy-blue primary + orange accent) — research confirms it's already correct. Fix *execution*: unified hero with dark overlay, generous whitespace, orange reserved for CTAs/highlights only.
-- **Borrow CBS's structure, not its look:** centered hero + single CTA, persona section ("Who We Help"), visual process timeline, persistent quote CTA.
+- **Modern industrial** confidence (clean grid, measured detail, technical type) — signals precision/quality.
+- **Food-grade warmth** via a signature **oat/cream** neutral (evokes dry food / powder) — this is the move that makes it feel premium and *food*, not generic corporate navy.
+- **Heritage-forward:** the 40-year / Ropak / family story is surfaced, not buried.
+- Full visual system in `design-system.md`. Headline identity moves: **redesigned logo**, **navy + amber + oat** palette, **Space Grotesk + Inter** type, **precision-grid/flow motif**, **duotone photography**.
 
-**Folded-in copy angles:** brief #2 (Scale Storytelling) and #5 (Food-Founder-Friendly) inform tone, not layout.
-**Explicitly skipped:** CBS's mobile-vs-desktop hero swap, e-commerce, government-contracting depth.
-
----
-
-## 3. Stack — ✅ Decided (Tailwind added)
-
-**Astro + Tailwind CSS + TypeScript, deployed on Netlify. No React / no framework runtime.**
-
-| Concern | Choice | Why |
-| --- | --- | --- |
-| Framework | **Astro** (static output) | ~zero client JS; best raw performance/SEO for a content page |
-| Styling | **Tailwind CSS** | Chosen for consistency + iteration speed (trade-off: one build dependency vs. Astro scoped CSS — accepted) |
-| Design tokens | Tailwind `@theme` block in `src/styles/global.css` | Single source of truth for navy/orange + font |
-| Language | TypeScript | Safer content data + props |
-| Interactivity | A few lines of **vanilla JS** (mobile menu; optional persona tabs) | No React needed |
-| Forms | **Netlify Forms** (`data-netlify="true"`) | Zero-backend quote submissions |
-| Images | Astro `<Image>` (`astro:assets`) | Auto-optimization |
-| Hosting | **Netlify** | Auto-detects Astro, CDN, deploy previews, free forms |
-
-### Why Astro over Next.js (recap)
-For a mostly-static single page, Next.js ships a React runtime + hydration we don't need. Astro ships ~0 KB JS for static content — lighter, faster, simpler. Next.js would only win if this became an app (it won't).
-
-### Tailwind integration — ✅ done
-1. Installed `tailwindcss` + `@tailwindcss/vite` (v4); plugin wired in `astro.config.mjs`.
-2. Tokens live in a Tailwind `@theme` block in `src/styles/global.css` (replaced the old `tokens.css`).
-3. All section components use Tailwind utilities; `.btn` / `.wrap` / `.section` are `@layer components`.
-4. `npm run build` passes; output ships ~0 KB JS and a single `<h1>`.
-
-> The scaffold is consistent with the decided stack. Remaining work is **section build-out** (real hero imagery, persona tabs, timeline, hover states) — see §7.
+**Scope of identity change:** brand **refresh** — we keep the navy+amber *equity* (40 yrs of recognition) but redesign every expression of it. Not a full rename/rebrand.
 
 ---
 
-## 4. Page structure — ✅ Decided (section order)
+## 3. Scope — ✅ Decided
 
-Single page, top → bottom (full detail in `spec.md`):
+**One concept homepage.** Sections, anchor nav, no multi-page, no app, no CMS, no e-commerce. Demo content where NPCO's private content isn't public (clearly tasteful, never fake-attributed).
 
-1. Sticky header · 2. Hero · 3. Heritage trust bar · 4. Services · 5. Who We Help ·
+Section order (detail in `spec.md`):
+1. Header (sticky) · 2. Hero · 3. Heritage/trust strip · 4. Services · 5. Who We Help ·
 6. How It Works · 7. Certifications · 8. Social proof 🟡 · 9. Quote CTA · 10. Footer
 
 ---
 
-## 5. Content inventory — 🟡 Needs NPCO
+## 4. Stack — ✅ Decided
 
-Verified facts already encoded in `src/data/site.ts`. Outstanding items tracked in **`content-needed.md`**. Sections gated by content are marked `PLACEHOLDER` and will be built with labeled placeholders so momentum isn't blocked.
+**Astro + Tailwind CSS v4 + TypeScript → Netlify.** Motion via **vanilla IntersectionObserver + CSS only** (no jQuery / slick / GSAP — explicitly avoiding CBS's 66-script bloat). Self-hosted fonts via `@fontsource-variable`. Images via `astro:assets` (duotone treatment in CSS). Quote form via Netlify Forms.
 
----
-
-## 6. SEO + performance plan — ✅ Decided
-
-**SEO** — exactly one `<h1>` (fixes the verified missing-H1 bug); keyword-bearing `<h2>`s; `LocalBusiness` schema in `Base.astro`; descriptive title/meta + image `alt`.
-**Performance** — static output, ~zero JS, inline critical CSS, `astro:assets` images, system fonts, long-cache hashed assets via `netlify.toml`.
+Rationale unchanged from research: Astro ships ~0 KB JS for static content → we get CBS-grade richness at NPCO-grade weight. The motion budget is a few KB of vanilla JS, gated behind `prefers-reduced-motion`.
 
 ---
 
-## 7. Build sequence — ⏭️ Next step (after docs approved)
+## 5. Motion system — ✅ Decided (the differentiator)
 
-1. Integrate Tailwind (`astro add tailwind` + port tokens). 2. Build hero (highest impact). 3. Build remaining sections top-to-bottom, each reviewable. 4. Wire quote form → Netlify + test. 5. Add imagery + finalize copy. 6. SEO/perf pass (Lighthouse ≥ 95). 7. Netlify preview → review → launch.
+| Effect | Tech | Where |
+| --- | --- | --- |
+| Scroll-reveal (fade/rise) | IntersectionObserver adds `.in` → CSS transition | every section, staggered |
+| Stat count-up | IntersectionObserver + rAF | Heritage strip |
+| Card hover lift + image zoom | CSS only | Services, personas |
+| Logo/cert marquee | CSS keyframes | trust strips |
+| Hero parallax / ken-burns | CSS transform on scroll (cheap) | Hero duotone image |
+| Animated CTA arrow, button sheen | CSS only | CTAs |
+
+All ≤ ~2 KB JS total, disabled under `prefers-reduced-motion`.
 
 ---
 
-## 8. Current status
+## 6. SEO + performance — ✅ Decided
 
-- ✅ Scope, direction, stack (incl. Tailwind), section order — decided.
-- ✅ Scaffold finished on-stack: Astro + **Tailwind integrated**, section **stubs** wired to `site.ts`, design tokens in `@theme`, Netlify config. `npm run build` passes (~0 KB JS, single `<h1>`).
-- ⏭️ Next: **section build-out** (hero imagery, persona tabs, timeline, hover states) — §7.
-- 🟡 Awaiting real content from NPCO (`content-needed.md`).
+Single `<h1>`; keyword `<h2>`s; `LocalBusiness` schema; descriptive meta + image `alt`; static output; inline critical CSS; `astro:assets`; subset self-hosted fonts; long-cache hashed assets via `netlify.toml`.
+
+---
+
+## 7. Build plan — ⏭️ (task 7/8)
+
+1. Scaffold Astro + Tailwind v4 + fonts; define the new design tokens in `@theme`.
+2. Design the **logo** (SVG) + the motif primitives.
+3. Build **Hero** (duotone factory + new identity) — the pitch's money shot.
+4. Build remaining sections top→bottom with the motion system.
+5. Wire quote form (Netlify) + reduced-motion + a11y pass.
+6. Lighthouse ≥ 95; Netlify preview.
+
+---
+
+## 8. Status
+
+- ✅ Research complete (visual + experience/interaction audit of both sites).
+- ✅ Mandate, direction, identity, scope, stack, motion — decided & documented.
+- ⏭️ Scaffolding + building (task 8, in progress).
+- 🟡 Social proof / exact certs stay demo-placeholder until NPCO engages (`content-needed.md`).
