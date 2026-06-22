@@ -1,4 +1,6 @@
 ---
+// Preload the display font used by the hero H1 → fast, in-brand first paint (LCP).
+import spaceGroteskUrl from '@fontsource-variable/space-grotesk/files/space-grotesk-latin-wght-normal.woff2?url';
 import Base from '../layouts/Base.astro';
 import Header from '../components/Header.astro';
 import Footer from '../components/Footer.astro';
@@ -13,6 +15,7 @@ import QuoteCta from '../components/sections/QuoteCta.astro';
 ---
 
 <Base>
+  <link slot="head" rel="preload" as="font" type="font/woff2" href={spaceGroteskUrl} crossorigin="anonymous" />
   <Header />
   <main id="main">
     <Hero />

@@ -97,12 +97,21 @@
   .duotone img {
     @apply size-full object-cover;
     filter: grayscale(1) contrast(1.05);
+    transition: filter 0.5s ease;
   }
   .duotone::after {
     content: '';
     @apply pointer-events-none absolute inset-0;
     background: linear-gradient(180deg, rgba(18, 36, 60, 0.55), rgba(10, 20, 34, 0.85));
     mix-blend-mode: multiply;
+    transition: opacity 0.5s ease;
+  }
+  /* reveal full color on card hover (scoped — not the hero backdrop) */
+  .group:hover .duotone--reveal img {
+    filter: grayscale(0) contrast(1.02);
+  }
+  .group:hover .duotone--reveal::after {
+    opacity: 0;
   }
 }
 

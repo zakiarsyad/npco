@@ -22,7 +22,7 @@ const photos = { mixing, packaging, logistics: warehousing, 'stick-packs': stick
     <div class="mt-12 grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-4">
       {services.map((s, i) => (
         <article class="group reveal relative flex flex-col overflow-hidden rounded-2xl border border-line bg-white transition-all duration-300 hover:-translate-y-1.5 hover:shadow-[0_24px_50px_rgba(10,20,34,0.13)]" style={`--reveal-delay:${i * 90}ms`}>
-          <div class="duotone aspect-[16/10]">
+          <div class="duotone duotone--reveal aspect-[16/10]">
             <Image src={photos[s.id]} alt={`${s.title} — NPCO facility`} widths={[320, 640]} sizes="(min-width:1024px) 25vw, (min-width:640px) 50vw, 100vw" class="transition-transform duration-500 group-hover:scale-105" />
           </div>
           <div class="flex flex-1 flex-col p-6">
