@@ -84,6 +84,12 @@
   .btn--ghost {
     @apply border border-white/30 bg-white/5 text-white hover:bg-white/10;
   }
+  /* faint precision grid */
+  .grid-motif {
+    background-image: linear-gradient(rgba(255, 255, 255, 0.06) 1px, transparent 1px),
+      linear-gradient(90deg, rgba(255, 255, 255, 0.06) 1px, transparent 1px);
+    background-size: 56px 56px;
+  }
   /* duotone image treatment: grayscale base + navy/amber tint via blend */
   .duotone {
     @apply relative isolate overflow-hidden;
@@ -97,12 +103,6 @@
     @apply pointer-events-none absolute inset-0;
     background: linear-gradient(180deg, rgba(18, 36, 60, 0.55), rgba(10, 20, 34, 0.85));
     mix-blend-mode: multiply;
-  }
-  /* faint precision grid */
-  .grid-motif {
-    background-image: linear-gradient(rgba(255, 255, 255, 0.06) 1px, transparent 1px),
-      linear-gradient(90deg, rgba(255, 255, 255, 0.06) 1px, transparent 1px);
-    background-size: 56px 56px;
   }
 }
 
